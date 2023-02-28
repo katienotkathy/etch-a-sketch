@@ -3,5 +3,12 @@
     height: 960px;
     border-style: double;
     border-width: 5px;
-    flex: auto;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
 }
+
+.etchPixel {
+    background-color: grey;
+}
+
