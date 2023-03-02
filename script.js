@@ -1,13 +1,47 @@
-let gridSize = 100;
-
 // where to pick up:
-// make the button for setting the grid size
-// make a button to reset everything
-// -- consider putting all your declarations at the top for readability
+// finish greyscale mode and raindbow mode
 
 const container = document.querySelector(".container");
+let rainbowModeStatus = false;
+let greyscaleModeStatus = false;
+let plainModeStatus = true;
 
-function createGrid(gridSize) {
+createGrid();
+
+const gridButton = document.querySelector("#gridSize");
+gridButton.addEventListener('click', function() {
+    let newGridSize = parseInt(prompt("How many pixels in the etch grid?","Choose an integer from 1-100"));  
+    if (!Number.isInteger(newGridSize) || newGridSize == 0 || newGridSize > 100) {
+            alert("Please select an integer less than 100");
+        }
+        else {
+            container.innerHTML = '';
+            createGrid(newGridSize);
+        }
+    });
+
+const rainbowModeButton = document.querySelector("#rainbowMode");
+rainbowModeButton.addEventListener('click', () => {
+    rainbowModeStatus = true;
+    greyscaleModeStatus = false;
+    plainModeStatus = false;
+});
+
+const greyscaleModeButton = document.querySelector("#greyscaleMode");
+greyscaleModeButton.addEventListener('click', () => {
+    rainbowModeStatus = false;
+    greyscaleModeStatus = true;
+    plainModeStatus = false;
+});
+
+const plainModeButton = document.querySelector("#plainMode");
+plainModeButton.addEventListener('click', () => {
+    rainbowModeStatus = false;
+    greyscaleModeStatus = false;
+    plainModeStatus = true;
+});
+
+function createGrid(gridSize = 100) {
     for (let rowNum = 0; rowNum < gridSize; rowNum++) {
         const etchRow = document.createElement("div");
         etchRow.id = `etchRow${rowNum}`;
@@ -25,18 +59,24 @@ function createGrid(gridSize) {
             currentRow.appendChild(etchPixel);
         }
     }
-}
 
-const etchPixelNodes = document.querySelectorAll(".etchPixel");
-etchPixelNodes.forEach(element => {
+    const etchPixelNodes = document.querySelectorAll(".etchPixel");
+    etchPixelNodes.forEach(element => {
     element.addEventListener('mouseover',etch);    
 });
-
-const gridButton = document.querySelector("#gridSize");
-gridButton.addEventListener('click',()=>prompt("How many pixels in the etch grid?","Choose an integer from 1-100"));
+}
 
 function etch(e) {
-    this.style.backgroundColor = "black";
+    if (plainModeStatus) {
+        this.style.backgroundColor = "black";
+    }
+    else if (rainbowModeStatus) {
+        this.style.backgroundColor = "red";
+    }
+    else if (greyscaleModeStatus) {
+        this.style.backgroundColor = "yellow";
+    }
+    
 }
 
 
