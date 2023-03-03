@@ -1,6 +1,3 @@
-// where to pick up:
-// finish greyscale mode and raindbow mode
-
 const container = document.querySelector(".container");
 let rainbowModeStatus = false;
 let greyscaleModeStatus = false;
@@ -71,10 +68,22 @@ function etch(e) {
         this.style.backgroundColor = "black";
     }
     else if (rainbowModeStatus) {
-        this.style.backgroundColor = "red";
+        let r = Math.floor(Math.random() * 256); // range is 0-255
+        let g = Math.floor(Math.random() * 256);
+        let b = Math.floor(Math.random() * 256);
+        let thergb = "rgb(" + r + "," + g + "," + b + ")";
+        this.style.backgroundColor = thergb;
     }
     else if (greyscaleModeStatus) {
-        this.style.backgroundColor = "yellow";
+        const style = getComputedStyle(this);
+        let tempColor = style.backgroundColor;
+            [r,g,b] = tempColor.replace(/[^\d,]/g, '').split(',');
+            r = parseInt(r) - parseInt(r) * 0.3;
+            g = parseInt(g) - parseInt(g) * 0.3;
+            b = parseInt(b) - parseInt(b) * 0.3;
+            
+            this.style.backgroundColor = "rgb(" + r + ", " + g + ", " + b + ")";
+            console.log(this.style.backgroundColor);
     }
     
 }
