@@ -83,7 +83,6 @@ function etch(e) {
             b = parseInt(b) - parseInt(b) * 0.3;
             
             this.style.backgroundColor = "rgb(" + r + ", " + g + ", " + b + ")";
-            console.log(this.style.backgroundColor);
     }
     
 }
